@@ -7,6 +7,9 @@ module.exports = {
     output: { path: path.join(__dirname, "build"), filename: "index.bundle.js" },
     mode: process.env.NODE_ENV || "development",
     resolve: { modules: [path.resolve(__dirname, "src"), "node_modules"] },
+      // kai subundlina visus js failus ir kazkuriam yra error ar warning tai klaida targetina i bundle, bet source maps sumapina compiled code back to my orgiinal source code
+    devtool: 'inline-source-map',
+      // paleidzia localHost:8080 serveri ir subundlina failus is ourput.path. Tu failu neiraso o laiko juos atmintyje ty neiskepa nauja failiuko dist folderyje.
     devServer: { contentBase: path.join(__dirname, "src") },
     module: {
         rules: [
