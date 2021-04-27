@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   purge: [
     // remove any unused classes for the smallest file size on prod
@@ -7,20 +9,20 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
+      white: colors.white,
+      purple: colors.purple,
       gray: {
-        darkest: '#1f2d3d',
-        dark: '#3c4858',
-        DEFAULT: '#c0ccda',
-        light: '#e0e6ed',
-        lightest: '#f9fafc',
+        darkest: '#2C2C2C'
       },
       yellow: {
-        darkest: '#1f2d3d',
-        dark: '#3c4858',
-        DEFAULT: '##F5F3F1',
-        light: '#e0e6ed',
+        darkest: '#7F5539',
+        // dark: '#3c4858',
+        DEFAULT: '#F5F3F1',
+        // light: '#DDB892',
+        // light: '#f1e0d0',
+        light:'#efdbc8',
         lightest: '#F5F3F1',
-      }
+      },
     },
     extend: {},
   },
@@ -28,4 +30,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};
