@@ -9,4 +9,6 @@
 
 body {
   background-color: #f5f3f1;
+  @apply font-comic;
 }
+
