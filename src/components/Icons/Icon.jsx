@@ -6,12 +6,9 @@ const Icon = ({ iconId, iconStyles }) => {
     // const iconPath =  `/images/icons.svg?cache=01#${icon}`
 
     return (
-        <>
-        čia svg
         <svg className={`tw-inline-block tw-fill-current tw-flex-shrink-0 ${iconStyles}`}>
             <use href={icons + '#' + iconId} />
         </svg>
-        </>
     );
 }
 export default Icon;
