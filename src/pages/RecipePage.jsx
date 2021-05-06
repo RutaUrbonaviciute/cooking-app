@@ -14,7 +14,6 @@ const RecipePage = ({ onClick, recipe }) => {
 
   return (
     <>
-      <h2 className="text-purple-400">Recipe page</h2>
       <button
         className="p-1 rounded-full hover:bg-yellow-light"
         onClick={onClick}
