@@ -1,8 +1,10 @@
 import React from 'react';
 import Icon from '../components/Icons/Icon.jsx';
 import RecipeInfo from '../components/RecipeInfo.jsx';
+import { Link } from '../router/Link';
+import { routes } from '../routes';
 
-const RecipePage = ({ onClick, recipe }) => {
+const RecipePage = ({ recipe }) => {
   const {
     name,
     prepTime,
@@ -14,15 +16,15 @@ const RecipePage = ({ onClick, recipe }) => {
 
   return (
     <>
-      <button
-        className="p-1 rounded-full hover:bg-yellow-light"
-        onClick={onClick}
-      >
-        <Icon
-          iconStyles="h-6 w-6 stroke-current text-yellow-darkest"
-          iconId="arrow-left"
-        />
-      </button>
+      {/* not home but previous page */}
+      <Link to={routes.home.path}>
+        <div className="p-1 rounded-full hover:bg-yellow-light">
+          <Icon
+            iconStyles="h-6 w-6 stroke-current text-yellow-darkest"
+            iconId="arrow-left"
+          />
+        </div>
+      </Link>
 
       <div className="w-full text-left">
         {/* nesikeicia font weight */}

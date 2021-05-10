@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from './Icons/Icon.jsx';
+import Icon from './Icons/Icon';
 
 const RecipeInfo = ({ prepTime, peopleNumber }) => {
   return (

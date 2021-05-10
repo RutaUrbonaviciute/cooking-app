@@ -13,7 +13,7 @@ module.exports = {
       white: colors.white,
       purple: colors.purple,
       gray: {
-        darkest: '#2C2C2C'
+        darkest: '#2C2C2C',
       },
       yellow: {
         darkest: '#7F5539',
@@ -21,16 +21,16 @@ module.exports = {
         DEFAULT: '#F5F3F1',
         // light: '#DDB892',
         // light: '#f1e0d0',
-        light:'#efdbc8',
+        light: '#efdbc8',
         lightest: '#F5F3F1',
       },
     },
     extend: {
-      fontFamily: {'comic': ['Comic Sans', 'Arial', 'sans-serif']},
+      fontFamily: { comic: ['Comic Sans', 'Arial', 'sans-serif'] },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };
