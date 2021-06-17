@@ -1,17 +1,51 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
-import { recipes } from '../recipesText';
 import { Link } from '../router/Link';
 import { routes } from '../routes';
+import data from '../recipes.json';
+import getAllRecipes from '../api/getAllRecipes';
+import { RecipeContext } from '..';
 
 const RecipesPage = () => {
+  const [loading, setLoading] = useState(false);
+  const { value, setValue } = useContext(RecipeContext);
+
+  console.log('value', value);
+
+  useEffect(() => {
+    if (value) {
+      return;
+    }
+
+    setLoading(true);
+    getAllRecipes()
+      .then(response => {
+        setValue(response.record);
+        setLoading(false);
+      })
+      .catch(err => {
+        // to imporove toast notification could be implemented
+        // eslint-disable-next-line no-console
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <>
-      {recipes.map(recipe => (
-        <Link key={recipe.id} to={routes.recipe.path}>
-          <RecipeCard recipe={recipe} />
-        </Link>
-      ))}
+      {loading || !value ? (
+        <div>loading</div>
+      ) : (
+        value.map(recipe => (
+          <Link
+            key={recipe.id}
+            id={recipe.id}
+            to={routes.recipe.buildPath(recipe.id)}
+          >
+            <RecipeCard recipe={recipe} />
+          </Link>
+        ))
+      )}
     </>
   );
 };

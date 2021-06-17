@@ -1,30 +1,71 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Icon from '../components/Icons/Icon.jsx';
 import RecipeInfo from '../components/RecipeInfo.jsx';
 import { Link } from '../router/Link';
 import { routes } from '../routes';
+import { useRouter } from '../router/RouterContext';
+import { RecipeContext } from '../index.jsx';
+import updateBin from '../api/updateBin';
 
 const RecipePage = ({ recipe }) => {
-  const {
-    name,
-    prepTime,
-    peopleNumber,
-    imgLink,
-    ingredients,
-    prepSteps,
-  } = recipe;
+  const { value, setValue } = useContext(RecipeContext);
+
+  const { id, name, prepTime, peopleNumber, imgLink, ingredients, prepSteps } =
+    recipe;
+
+  console.log(recipe);
+
+  const { route } = useRouter();
+
+  const handleDeleteRecipe = () => {
+    console.log(value);
+    const filteredRecipes = value.filter(item => item.id !== id);
+
+    updateBin(filteredRecipes)
+      .then(res => {
+        setValue(res.record);
+        history.push('/recipes');
+      })
+      .catch(err => {
+        // to imporove toast notification could be implemented
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
+  };
 
   return (
     <>
-      {/* not home but previous page */}
-      <Link to={routes.home.path}>
-        <div className="p-1 rounded-full hover:bg-yellow-light">
-          <Icon
-            iconStyles="h-6 w-6 stroke-current text-yellow-darkest"
-            iconId="arrow-left"
-          />
+      <div className="p-2 mb-6 flex justify-between items-center border-b-2 border-yellow-light">
+        <Link to={routes.recipes.path}>
+          <div className="p-1 rounded-full hover:bg-yellow-light">
+            <Icon
+              iconStyles="h-6 w-6 stroke-current text-yellow-darkest"
+              iconId="arrow-left"
+            />
+          </div>
+        </Link>
+
+        <div className="flex justify-between items-center">
+          <button
+            onClick={() => {
+              alert('edit');
+            }}
+            className="mr-2"
+          >
+            <Icon
+              iconId="edit"
+              iconStyles="h-7 w-7 fill-current text-yellow-darkest group-hover:text-white"
+            />
+          </button>
+
+          <button onClick={handleDeleteRecipe}>
+            <Icon
+              iconId="delete"
+              iconStyles="h-5 w-5 fill-current text-yellow-darkest group-hover:text-white"
+            />
+          </button>
         </div>
-      </Link>
+      </div>
 
       <div className="w-full text-left">
         {/* nesikeicia font weight */}
@@ -43,21 +84,21 @@ const RecipePage = ({ recipe }) => {
 
       <div className="my-4">
         <div>Ingredients</div>
-        {ingredients.map(ingredient => (
-          <div className="flex items-center p-1">
+        {ingredients.map((ingredient, index) => (
+          <div key={index} className="flex items-center p-1">
             <Icon
               iconStyles="h-3 w-3 fill-current text-yellow-light"
               iconId="circle"
             />
-            <div className="ml-2">{ingredient}</div>
+            <div className="ml-2">{ingredient.ingredient}</div>
           </div>
         ))}
       </div>
       <div>Preparation</div>
       {prepSteps.map((step, index) => (
-        <div className="flex p-1">
+        <div key={index} className="flex p-1">
           <div className="text-yellow-darkest">{index + 1}.</div>
-          <div className="mx-2 text-justify">{step}</div>
+          <div className="mx-2 text-justify">{step.instruction}</div>
         </div>
       ))}
     </>
