@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter, history } from './RouterContext';
 
-export function Link({ to, children, onClick, ...props }) {
+export function Link({ to, children, onClick, id, ...props }) {
   const { route } = useRouter();
 
   const handleClick = e => {
