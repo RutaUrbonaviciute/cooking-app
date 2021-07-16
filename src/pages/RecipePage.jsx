@@ -6,6 +6,7 @@ import { routes } from '../routes';
 import { useRouter } from '../router/RouterContext';
 import { RecipeContext } from '../index.jsx';
 import updateBin from '../api/updateBin';
+import { history } from '../router/RouterContext';
 
 const RecipePage = ({ recipe }) => {
   const { value, setValue } = useContext(RecipeContext);
@@ -17,14 +18,19 @@ const RecipePage = ({ recipe }) => {
 
   const { route } = useRouter();
 
+  const handleEditRecipe = () => {
+    setValue({ ...value, editableRecipe: recipe });
+    history.push('/edit');
+  };
+
   const handleDeleteRecipe = () => {
     console.log(value);
-    const filteredRecipes = value.filter(item => item.id !== id);
+    const filteredRecipes = value.allRecords.filter(item => item.id !== id);
 
     updateBin(filteredRecipes)
       .then(res => {
-        setValue(res.record);
         history.push('/recipes');
+        setValue({ allRecipes: res.record });
       })
       .catch(err => {
         // to imporove toast notification could be implemented
@@ -46,12 +52,7 @@ const RecipePage = ({ recipe }) => {
         </Link>
 
         <div className="flex justify-between items-center">
-          <button
-            onClick={() => {
-              alert('edit');
-            }}
-            className="mr-2"
-          >
+          <button onClick={handleEditRecipe} className="mr-2">
             <Icon
               iconId="edit"
               iconStyles="h-7 w-7 fill-current text-yellow-darkest group-hover:text-white"

@@ -11,17 +11,35 @@ import { history } from '../router/RouterContext';
 const CreateRecipePage = () => {
   const { value, setValue } = useContext(RecipeContext);
 
-  const [recipeTitle, setRecipeTitle] = useState('');
-  const [prepTime, setPrepTime] = useState();
-  const [portionsCount, setPortionsCount] = useState(1);
-  const [ingredientList, setIngredientList] = useState([]);
-  const [instructionList, setInstructionList] = useState([]);
+  console.log(value.editableRecipe);
 
-  const randomId = Date.now();
+  const [recipeTitle, setRecipeTitle] = useState(
+    value.editableRecipe?.name || ''
+  );
+  const [imgLink, setImgLink] = useState(value.editableRecipe?.imgLink || '');
+  const [prepTime, setPrepTime] = useState(
+    value.editableRecipe?.prepTime || null
+  );
+  const [portionsCount, setPortionsCount] = useState(
+    value.editableRecipe?.peopleNumber || 1
+  );
+  const [ingredientList, setIngredientList] = useState(
+    value.editableRecipe?.ingredients || []
+  );
+  const [instructionList, setInstructionList] = useState(
+    value.editableRecipe?.prepSteps || []
+  );
+
+  const randomId = value.editableRecipe?.id || Date.now();
 
   const handleRecipeTitle = e => {
     e.preventDefault();
     setRecipeTitle(e.target.value.trim());
+  };
+
+  const handleImageLink = e => {
+    e.preventDefault();
+    setImgLink(e.target.value.trim());
   };
 
   const handlePrepTime = e => {
@@ -111,13 +129,13 @@ const CreateRecipePage = () => {
     );
 
     updateBin([
-      ...value,
+      ...value.allRecords,
       {
         id: randomId,
         name: recipeTitle,
         prepTime: prepTime,
         peopleNumber: portionsCount,
-        imgLink: 'https://source.unsplash.com/user/phototastyfood',
+        imgLink,
         ingredients,
         prepSteps,
       },
@@ -139,12 +157,24 @@ const CreateRecipePage = () => {
         <LabelInput
           label="Recipe Title"
           id="recipe-title"
+          type="text"
           placeholder="title"
+          value={recipeTitle}
           onChange={handleRecipeTitle}
+        />
+
+        <LabelInput
+          label="Image Link"
+          id="img-url"
+          type="URL"
+          placeholder="here goes your link"
+          value={imgLink}
+          onChange={handleImageLink}
         />
 
         <div>
           <FormList
+            name="ingredient"
             listItems={ingredientList}
             listTitle="Ingredients"
             placeholderName="Ingredient"
@@ -155,6 +185,7 @@ const CreateRecipePage = () => {
         </div>
         <div>
           <FormList
+            name="instruction"
             listItems={instructionList}
             listTitle="Instructions"
             placeholderName="Instruction"
@@ -170,7 +201,7 @@ const CreateRecipePage = () => {
           handleDecrement={handleDecrement}
         />
 
-        <PreparationTime handlePrepTime={handlePrepTime} />
+        <PreparationTime value={prepTime} handlePrepTime={handlePrepTime} />
 
         <div className="mt-6 flex justify-center items-center">
           <button type="submit" className="bg-purple-300 p-2 rounded-md">

@@ -28,11 +28,18 @@ const PublicRoutes = () => {
         <CreateRecipePage />
       </Route>
 
+      <Route path={routes.editRecipe.path}>
+        <CreateRecipePage />
+      </Route>
+
       <Route path={routes.recipe.buildPath(route.props.id)}>
         <>
-          {value ? (
+          {value && value.allRecords !== 'undefined' ? (
+            // TODO: neveikia find of "undefined" nors tika buvo defined
             <RecipePage
-              recipe={value.find(recipe => `${recipe.id}` === route.props.id)}
+              recipe={value.allRecords.find(
+                recipe => `${recipe.id}` === route.props.id
+              )}
             />
           ) : null}
         </>

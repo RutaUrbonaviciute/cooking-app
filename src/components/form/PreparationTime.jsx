@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from '../../components/form/Input';
 import Label from './Label';
 
-const PreparationTime = ({ handlePrepTime }) => (
+const PreparationTime = ({ value, handlePrepTime }) => (
   <div className="mb-6">
     <Label text="Preparation Time" />
 
@@ -12,6 +12,7 @@ const PreparationTime = ({ handlePrepTime }) => (
           id="preparationTime"
           type="number"
           placeholder="min"
+          value={value}
           onChange={handlePrepTime}
         />
       </div>

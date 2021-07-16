@@ -20,7 +20,7 @@ const RecipesPage = () => {
     setLoading(true);
     getAllRecipes()
       .then(response => {
-        setValue(response.record);
+        setValue({ allRecords: response.record });
         setLoading(false);
       })
       .catch(err => {
@@ -33,10 +33,11 @@ const RecipesPage = () => {
 
   return (
     <>
+      {/* TODO: tuscias obj visada true, pakeisti */}
       {loading || !value ? (
         <div>loading</div>
       ) : (
-        value.map(recipe => (
+        value.allRecords.map(recipe => (
           <Link
             key={recipe.id}
             id={recipe.id}

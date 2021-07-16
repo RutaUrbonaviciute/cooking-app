@@ -3,6 +3,7 @@ import { Input } from './form/Input';
 import Icon from '../components/Icons/Icon.jsx';
 
 const FormList = ({
+  name,
   listItems,
   listTitle,
   onClick,
@@ -18,9 +19,10 @@ const FormList = ({
       {listItems.map((item, index) => (
         <div className="mb-2 flex justify-center items-center" key={item.id}>
           <Input
-            id={`ingredient-${item.id}`}
+            id={`${name}-${item.id}`}
             type="text"
             placeholder={`${placeholderName} ${index + 1}`}
+            value={item[name]}
             onChange={e => {
               onChange(e, item.id);
             }}

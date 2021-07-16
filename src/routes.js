@@ -27,4 +27,9 @@ export const routes = {
     getProps: path => ({}),
     match: path => path === '/add',
   },
+  editRecipe: {
+    path: '/edit',
+    getProps: path => ({}),
+    match: path => path === '/edit',
+  },
 };
